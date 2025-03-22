@@ -16,3 +16,7 @@ SQL Injection, kullanıcı girdisinin doğrudan SQL sorgularında kullanılması
 * **CVSS Skoru**: 8.6 (Yüksek)
 * **Vektör String**: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:L/A:L
 
+
+
+https://github.com/user-attachments/assets/959ac5c7-4703-4ae8-8fb0-51cdca9fa676
+
