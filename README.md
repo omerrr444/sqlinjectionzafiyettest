@@ -1,4 +1,4 @@
-# SQL Injection Zafiyeti Örneği
+# SQL Injection Zafiyeti 
 
 Bu dizin, SQL injection güvenlik açığı ile ilgili aşağıdaki dosyaları içermektedir:
 
