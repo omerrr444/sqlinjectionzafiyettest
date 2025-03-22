@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Injection Test - Offline Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #333;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            max-width: 800px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 300px;
+            padding: 8px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 15px;
+            min-height: 100px;
+            background-color: #f9f9f9;
+            white-space: pre-wrap;
+        }
+        .code-block {
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-left: 4px solid #4CAF50;
+            margin-top: 20px;
+            font-family: monospace;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        .tab-container {
+            margin-top: 20px;
+        }
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            color: black;
+        }
+        .tab button:hover {
+            background-color: #ddd;
+        }
+        .tab button.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SQL Injection Test Sayfası - Offline Demo</h1>
+        
+        <div class="input-group">
+            <label for="username">Kullanıcı Adı:</label>
+            <input type="text" id="username" placeholder="Kullanıcı adı girin">
+            <button onclick="simulateQuery()">Kullanıcıyı Ara</button>
+        </div>
+        
+        <div class="tab">
+            <button class="tablinks active" onclick="openTab(event, 'Result')">Sonuç</button>
+        </div>
+        
+        <div id="Result" class="tabcontent" style="display: block;">
+            <h3>Sonuç:</h3>
+            <pre id="result">Sonuçlar burada görüntülenecek...</pre>
+        </div>
+    </div>
+
+    <script>
+        const users = [
+            { id: 1, username: "admin", email: "admin@example.com" },
+            { id: 2, username: "user1", email: "user1@example.com" },
+            { id: 3, username: "user2", email: "user2@example.com" }
+        ];
+        
+        function simulateQuery() {
+            const username = document.getElementById('username').value;
+            const resultElement = document.getElementById('result');
+            let results = [];
+            
+            if (username.includes("' OR '") && username.includes("'='")) {
+                results = users;
+                resultElement.textContent = JSON.stringify({ 
+                    users: results,
+                    note: "SQL Injection tespit edildi! Tüm kullanıcılar döndürüldü."
+                }, null, 2);
+            } else {
+                results = users.filter(user => user.username === username);
+                resultElement.textContent = JSON.stringify({ users: results }, null, 2);
+            }
+            
+            document.getElementById('Result').style.display = "block";
+            document.querySelectorAll('.tablinks')[0].className = "tablinks active";
+        }
+        
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
+</body>
+</html>
